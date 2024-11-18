@@ -1,0 +1,3 @@
+[submodule "packages/back"]
+	path = packages/back
+	url = https://github.com/nikola2434/planner-back
