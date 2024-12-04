@@ -1,3 +1,6 @@
 [submodule "packages/back"]
 	path = packages/back
 	url = https://github.com/nikola2434/planner-back
+[submodule "packages/front"]
+	path = packages/front
+	url = https://github.com/nikola2434/planner-front.git

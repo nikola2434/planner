@@ -1,9 +1,7 @@
-# compiled output
+# Global ignores (applies to the root and all projects)
+node_modules
 dist
 build
-node_modules
-
-# Logs
 logs
 *.log
 npm-debug.log*
@@ -12,13 +10,15 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 
-# OS
+# OS files
 .DS_Store
 .env
+.env.local
+.env.*.local
 
-# Tests
-/coverage
-/.nyc_output
+# Test output
+coverage
+.nyc_output
 
 # IDEs and editors
 .idea
@@ -28,10 +28,14 @@ lerna-debug.log*
 *.launch
 .settings/
 *.sublime-workspace
-
-# IDE - VSCode
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+# Specific to monorepo
+packages/*/node_modules
+packages/*/dist
+packages/*/build
+packages/*/coverage
