@@ -1,0 +1,30 @@
+{
+	"name": "planner",
+	"version": "0.0.1",
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"workspaces": [
+		"packages/*"
+	],
+	"private": true,
+	"scripts": {
+		"initial": "lerna run initial",
+		"dev": "lerna run dev",
+		"format": "lerna run format",
+		"release_patch": "lerna version patch -m \"Release\" --push",
+		"release_minor": "lerna version minor -m \"Release\" --push",
+		"release_major": "lerna version major -m \"Release\" --push"
+	},
+	"dependencies": {},
+	"devDependencies": {
+		"@typescript-eslint/eslint-plugin": "^8.17.0",
+		"@typescript-eslint/parser": "^8.17.0",
+		"eslint": "^9.16.0",
+		"eslint-plugin-prettier": "^5.2.1",
+		"eslint-plugin-react": "^7.37.2",
+		"eslint-plugin-react-hooks": "^5.0.0",
+		"lerna": "^8.1.9",
+		"prettier": "^3.4.2"
+	}
+}

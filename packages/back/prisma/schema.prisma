@@ -1,0 +1,47 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+model Discipline {
+    id        String   @id @default(cuid())
+    createdAt DateTime @default(now()) @map("created_at")
+    updatedAt DateTime @updatedAt @map("updated_at")
+
+    name    String
+    color   String?
+    columns Int     @default(1)
+
+    subject Subject[]
+
+    @@map("discipline")
+}
+
+model Subject {
+    id        String   @id @default(cuid())
+    createdAt DateTime @default(now()) @map("created_at")
+    updatedAt DateTime @updatedAt @map("updated_at")
+
+    name String
+
+    countLectures   Int @default(0) @map("count_lectures")
+    countSeminars   Int @default(0) @map("count_seminars")
+    countLaboratory Int @default(0) @map("count_labaratory")
+    hoursLaboratory Int @default(0) @map("hours_labaratory")
+
+    countSelfWork Int @default(0) @map("count_self_work")
+    countText     Int @default(0) @map("count_text")
+    countExam     Int @default(0) @map("count_exam")
+
+    discipline   Discipline? @relation(fields: [disciplineId], references: [id])
+    disciplineId String?     @map("descipline_id")
+
+    x Int
+    y Int
+
+    @@map("subject")
+}

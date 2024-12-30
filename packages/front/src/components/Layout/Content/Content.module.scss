@@ -1,0 +1,9 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: calc(100% - 15rem);
+  > div {
+    flex: 1; /* Позволяет дочерним элементам растягиваться */
+  }
+}

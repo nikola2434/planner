@@ -1,0 +1,26 @@
+.link {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  height: 50px;
+  font-size: 1.125rem;
+  opacity: 0.8;
+  .icon {
+    transition: all 0.333s ease-in-out;
+  }
+
+  transition: all 0.333s ease-in-out;
+  &:hover {
+    opacity: 1;
+  }
+  &:hover .icon {
+    color: var(--color-primary);
+  }
+}
+
+.active {
+  opacity: 1;
+  .icon {
+    color: var(--color-primary);
+  }
+}

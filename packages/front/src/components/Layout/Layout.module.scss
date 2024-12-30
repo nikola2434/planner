@@ -1,0 +1,45 @@
+.main {
+  height: 100vh;
+  display: flex;
+  width: 100%;
+}
+
+@keyframes hideSidebar {
+  from {
+    transform: translateX(0);
+    width: 15rem;
+  }
+
+  to {
+    width: 3rem;
+  }
+}
+
+@keyframes showSidebar {
+  from {
+    width: 3rem;
+  }
+
+  to {
+    transform: translateX(0);
+    width: 15rem;
+  }
+}
+
+.hideSidebar {
+  > aside {
+    animation: hideSidebar 0.35s forwards;
+  }
+}
+
+.showSidebar {
+  > aside {
+    animation: showSidebar 0.35s forwards;
+  }
+
+  @media (min-width: 15rem) {
+    .showSidebar > aside {
+      animation: none;
+    }
+  }
+}

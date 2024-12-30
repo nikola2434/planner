@@ -1,0 +1,49 @@
+.right {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  flex-direction: column;
+  position: sticky;
+  height: 100%;
+  margin-top: 50px;
+  right: 0;
+  z-index: 5;
+}
+
+.container {
+  display: grid;
+  font-size: 40px;
+  height: 300px;
+  flex-shrink: 0;
+  grid-template-rows: repeat(4, 1fr); // 4 строки одинаковой высоты
+  grid-template-columns: 50px 50px 50px; // 3 колонки шириной 50px
+
+  > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-gray-3);
+    border: 1px solid var(--color-primary);
+  }
+
+  .value_1_0 {
+    grid-row: 2;
+    grid-column: 1;
+  }
+  .value_1_1 {
+    grid-row: 4;
+    grid-column: 1;
+  }
+  .value_2_0 {
+    grid-row: 1 / span 2;
+    grid-column: 2;
+  }
+  .value_2_1 {
+    grid-row: 3 / span 2;
+    grid-column: 2;
+  }
+  .value_3 {
+    grid-row: 1 / span 4;
+    grid-column: 3;
+  }
+}

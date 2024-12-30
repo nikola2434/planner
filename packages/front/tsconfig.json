@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "noImplicitAny": true,
+    "module": "ESNext",
+    "target": "ES2017",
+    "jsx": "react-jsx",
+    "allowJs": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/ui/*": ["./src/components/ui/*"],
+      "@/src/*": ["./src/*"],
+      "@/public/*": ["./public/*"],
+      "@/screens/*": ["./src/components/Screens/*"]
+    },
+    "plugins": [{ "name": "typescript-plugin-css-modules" }]
+  },
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS"
+    }
+  }
+}

@@ -1,0 +1,41 @@
+# Global ignores (applies to the root and all projects)
+node_modules
+dist
+build
+logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# OS files
+.DS_Store
+.env
+.env.local
+.env.*.local
+
+# Test output
+coverage
+.nyc_output
+
+# IDEs and editors
+.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# Specific to monorepo
+packages/*/node_modules
+packages/*/dist
+packages/*/build
+packages/*/coverage
