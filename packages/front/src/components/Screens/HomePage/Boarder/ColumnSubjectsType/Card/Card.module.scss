@@ -1,6 +1,16 @@
+.title {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+}
+
 .card {
   height: 130px !important;
   width: 300px !important;
+  user-select: none !important;
+  overflow: hidden !important;
   :global {
     .ant-card-body {
       padding: 0px !important;
@@ -12,6 +22,13 @@
     }
     .ant-card-head {
       cursor: grab !important;
+      padding: 0px !important;
+      .ant-card-head-wrapper {
+        height: 38px;
+        .ant-card-head-title {
+          height: 100%;
+        }
+      }
     }
   }
 

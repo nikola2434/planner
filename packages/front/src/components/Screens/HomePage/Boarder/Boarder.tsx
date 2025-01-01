@@ -9,6 +9,7 @@ import { DndContext, DragEndEvent, DragOverlay, DragStartEvent, closestCenter } 
 import { useLayoutEffect, useState } from 'react';
 import { CardSubject } from './ColumnSubjectsType/Card';
 import { allActionsBoard } from '@/src/store/boards';
+import { ColorsCardType } from './ColumnSubjectsType/Card/Card.interface';
 
 export const Boarder = () => {
   const { subjects, typeSubjects } = useStateSelector((state) => state.board);
@@ -30,7 +31,7 @@ export const Boarder = () => {
     );
   }, [subjects]);
 
-  const [active, setActive] = useState<null | ColumnSubject>(null);
+  const [active, setActive] = useState<({ card: ColumnSubject } & { colors: Partial<ColorsCardType> }) | null>(null);
 
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
@@ -51,7 +52,7 @@ export const Boarder = () => {
   const handleDragStart = (event: DragStartEvent) => {
     const activeCard = subjectsMap?.[event.active.id];
     if (activeCard) {
-      setActive(activeCard);
+      setActive(() => ({ card: activeCard, colors: event.active.data.current as Partial<ColorsCardType> }));
     }
   };
 
@@ -63,7 +64,7 @@ export const Boarder = () => {
           <ColumnSubjectsType {...item} key={item.id} />
         ))}
         <DragOverlay adjustScale style={{ transformOrigin: '0 0 ' }}>
-          {active ? <CardSubject subject={active} /> : null}
+          {active?.card ? <CardSubject subject={active.card} colors={active.colors} /> : null}
         </DragOverlay>
         <RightSidebar />
       </div>

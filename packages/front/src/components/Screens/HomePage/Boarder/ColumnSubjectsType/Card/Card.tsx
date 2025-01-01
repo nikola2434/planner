@@ -4,16 +4,31 @@ import { FC } from 'react';
 import style from './Card.module.scss';
 import { useDraggable } from '@dnd-kit/core';
 import clsx from 'clsx';
+import { ColorsCardType } from './Card.interface';
 
-export const CardSubject: FC<{ subject: ColumnSubject }> = ({ subject }) => {
-  const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
+interface CardSubjectProps {
+  subject: ColumnSubject;
+  colors?: Partial<ColorsCardType>;
+}
+
+export const CardSubject: FC<CardSubjectProps> = ({ colors = {}, subject }) => {
+  const { attributes, listeners, setNodeRef, isDragging } = useDraggable({
     id: subject.id,
+    data: { ...colors },
   });
 
   return (
     <Card
       size="small"
-      title={<div {...listeners}>{subject.name}</div>}
+      title={
+        <div
+          {...listeners}
+          style={{ backgroundColor: colors.colorBackHead, color: colors.colorTitle }}
+          className={style.title}
+        >
+          {subject.name}
+        </div>
+      }
       style={{ width: 300, height: 130 }}
       className={clsx(style.card, isDragging && style.isDragging)}
       ref={setNodeRef}

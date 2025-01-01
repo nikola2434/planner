@@ -5,15 +5,29 @@ import { COUNT_SEMESTER } from '@/src/share/constants.share';
 import style from './ColumnSubjectType.module.scss';
 import { Empty } from './Empty';
 import { fillArray } from '@/src/utils/fillArray';
+import Color from 'color';
 
 const countRows = COUNT_SEMESTER || 12;
 const arrRows = Array(countRows).fill(0);
 
 export const ColumnSubjectsType: FC<ColumnSubjectType> = (props) => {
+  const color: Color | null = props.color ? Color(props.color) : null;
+  const backColorColumn = color ? Color(color).alpha(0.1).rgb().string() : null;
+  const colorText = color ? (color.isDark() ? Color(color).lighten(0.7).hex() : Color(color).darken(0.7).hex()) : null;
+  const backOver = color ? Color(color).alpha(0.2).rgb().string() : null;
+
   return (
     <div className={style.column}>
-      <div className={style.header}>{props.name}</div>
-      <div className={style.rows}>
+      <div
+        className={style.header}
+        style={{
+          backgroundColor: color?.hex(),
+          color: colorText,
+        }}
+      >
+        {props.name}
+      </div>
+      <div className={style.rows} style={{ backgroundColor: backColorColumn }}>
         {arrRows.map((_, ind) => {
           let row: ColumnSubject[] | undefined = props.mapSemester[ind];
           if (row) {
@@ -24,11 +38,17 @@ export const ColumnSubjectsType: FC<ColumnSubjectType> = (props) => {
           return (
             <div className={style.row} key={ind}>
               {row.map((item, indX) => (
-                <Empty key={indX} id={`${indX}_${ind}_${props.id}`}>
-                  {item && <CardSubject subject={item} key={item.id} />}
+                <Empty key={indX} id={`${indX}_${ind}_${props.id}`} colorOver={backOver}>
+                  {item && (
+                    <CardSubject
+                      subject={item}
+                      key={item.id}
+                      colors={{ colorBackHead: color.hex(), colorTitle: colorText }}
+                    />
+                  )}
                 </Empty>
               ))}
-              <Empty isLast key={row.length} id={`${row.length}_${ind}_${props.id}`} />
+              <Empty isLast key={row.length} id={`${row.length}_${ind}_${props.id}`} colorOver={backOver} />
             </div>
           );
         })}
