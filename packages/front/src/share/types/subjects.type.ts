@@ -5,7 +5,6 @@ export interface SubjectTypeInterface {
 
   name: string;
   color?: string;
-  columns?: number;
 
   subject: SubjectInterface[];
 }

@@ -13,7 +13,6 @@ const defaultValues: SubjectTypeFormInterface = {
   name: '',
   subject: [],
   color: '#1677FF',
-  columns: 1,
 };
 
 export const useFormSubjectType = () => {

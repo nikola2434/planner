@@ -20,7 +20,7 @@ export const DriverDisciplineType = () => {
       width={600}
       onClose={closeDrawer}
       open={open}
-      maskClosable={false}  
+      maskClosable={false}
       destroyOnClose={true}
       extra={
         <Space>
@@ -44,21 +44,6 @@ export const DriverDisciplineType = () => {
             name="name"
             rules={{ required: { value: true, message: 'Поле обязательно для заполнения' } }}
             render={({ field }) => <Input {...field} />}
-          />
-        </Form.Item>
-        <Form.Item
-          label={'Количество колонок'}
-          validateStatus={errors.columns ? 'error' : 'success'}
-          help={errors.columns && errors['columns']?.message}
-        >
-          <Controller
-            control={control}
-            name="columns"
-            rules={{
-              min: { value: 1, message: 'Количество колонок должно быть минимум 1' },
-              max: { value: 10, message: 'Количество колонок не должно привышать 10' },
-            }}
-            render={({ field }) => <InputNumber {...field} min={1} max={10} style={{ width: '100%' }} />}
           />
         </Form.Item>
         <div style={{ display: 'flex', width: '100%', gap: '8px', alignItems: 'center' }}>

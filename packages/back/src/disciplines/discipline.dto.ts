@@ -9,11 +9,6 @@ export class DisciplineDto {
     @IsHexColor()
 	color?: string
 
-	@IsNumber()
-	@IsOptional()
-	@Min(1)
-	columns?: number
-
 	@IsArray()
 	@IsOptional()
 	@IsString({ each: true })
