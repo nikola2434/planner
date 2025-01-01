@@ -3,7 +3,7 @@
   justify-content: start;
   align-items: center;
   flex-direction: column;
-  width: 50px;
+  min-width: 50px;
   margin-top: 50px;
   z-index: 5;
   position: sticky;
@@ -11,17 +11,17 @@
   left: 0;
   > div {
     width: 100%;
-    font-size: 40px;
+    font-size: 34px;
     height: 150px;
     flex-shrink: 0;
-    border-right: 1px solid var(--color-primary);
-    border-bottom: 1px solid var(--color-primary);
+    border-right: 1px solid var(--color-gray-5);
+    border-bottom: 1px solid var(--color-gray-5);
     display: flex;
     align-items: center;
     justify-content: center;
     background: var(--color-gray-3) !important;
   }
   > div:nth-child(1) {
-    border-top: 1px solid var(--color-primary);
+    border-top: 1px solid var(--color-gray-5);
   }
 }
