@@ -1,19 +1,25 @@
 .right {
   display: flex;
+  flex: 1;
   justify-content: start;
-  align-items: center;
+  align-items: end;
   flex-direction: column;
   position: sticky;
   height: 100%;
   margin-top: 50px;
   right: 0;
   z-index: 5;
+  min-width: 150px;
 }
 
 .container {
+  background-color: var(--color-gray-5);
   display: grid;
-  font-size: 40px;
+  gap: 1px;
+  font-size: 34px;
   height: 300px;
+  border-top: 1px solid var(--color-gray-5);
+  border-left: 1px solid var(--color-gray-5);
   flex-shrink: 0;
   grid-template-rows: repeat(4, 1fr); // 4 строки одинаковой высоты
   grid-template-columns: 50px 50px 50px; // 3 колонки шириной 50px
@@ -23,7 +29,6 @@
     align-items: center;
     justify-content: center;
     background-color: var(--color-gray-3);
-    border: 1px solid var(--color-primary);
   }
 
   .value_1_0 {

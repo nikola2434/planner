@@ -7,6 +7,8 @@ export const RightSidebarResult: FC<{ items: [ResultRowType | undefined, ResultR
 }) => {
   return (
     <div className={style.container}>
+      <div className={style.empty_1}></div>
+      <div className={style.empty_2}></div>
       {items.map((item, ind) => (
         <Fragment key={ind}>
           <div className={style[`value_1_${ind}`]}>{item?.value1 || 0}</div>
