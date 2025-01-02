@@ -7,6 +7,7 @@ import type {
   SubjectTypeInterface,
 } from '@/src/share/types';
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { RootState } from '../store';
 
 export const getAllSubjects = createAsyncThunk<SubjectTypeInterface[]>('board/getAllSubjects', async (_, thunkApi) => {
   try {

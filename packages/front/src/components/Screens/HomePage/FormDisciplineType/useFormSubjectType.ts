@@ -6,6 +6,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { Modal } from 'antd';
 import { subjectActions } from '@/src/store/subject';
 import { allActionsBoard } from '@/src/store/boards';
+import { isObject } from '@/src/share/guards';
 
 const { confirm } = Modal;
 
@@ -15,10 +16,15 @@ const defaultValues: SubjectTypeFormInterface = {
   color: '#1677FF',
 };
 
+function hasToHex(value: unknown): value is { toHex: () => string } {
+  return isObject(value) && typeof value.toHex === 'function';
+}
+
 export const useFormSubjectType = () => {
   const { values, idRecord, mode } = useStateSelector((store) => store.subjectType);
   const actionsTypeSubject = useActionsCreators(subjectTypeActions);
   const actionsSubject = useActionsCreators(subjectActions);
+  const actionsBoard = useActionsCreators(allActionsBoard);
   const dispatch = useAppDispatch();
 
   const {
@@ -42,14 +48,22 @@ export const useFormSubjectType = () => {
   }, [idRecord, setValue, getValues]);
 
   const onSubmit = handleSubmit(async function (data) {
+    let color = data.color;
+    if (hasToHex(color)) {
+      data.color = '#' + color.toHex();
+    }
     if (mode === 'create') {
       const res = await dispatch(allActionsBoard.createSubjectType(data));
       if (allActionsBoard.createSubjectType.fulfilled.match(res) && res.payload.id) {
         actionsSubject.setIdRecord(res.payload.id);
       }
       close();
+      actionsBoard.getAllSubjects();
     } else {
-      dispatch(allActionsBoard.updateSubjectType({ id: values.id, data: data })).then(() => close());
+      dispatch(allActionsBoard.updateSubjectType({ id: values.id, data: data })).then(() => {
+        close();
+        actionsBoard.getAllSubjects();
+      });
     }
   } as SubmitHandler<SubjectTypeFormInterface>);
 

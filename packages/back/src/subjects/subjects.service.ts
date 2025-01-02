@@ -11,10 +11,28 @@ export class SubjectsService {
 	) {}
 
 	async create(data: SubjectDto) {
-		return this.prisma.subject.create({ data });
+		let x = 0;
+		let y = 0;
+		if (data.disciplineId) {
+			const maxX = await this.DisciplinesService.getMaxXbyY(data.disciplineId, y);
+			let currentX = maxX._max.x;
+			if (currentX) currentX++;
+
+			x = currentX;
+		}
+		return this.prisma.subject.create({ data: { ...data, x, y } });
 	}
 
 	async update(data: SubjectDto, id: string) {
+		let x = 0;
+		let y = 0;
+		if (data.disciplineId) {
+			const maxX = await this.DisciplinesService.getMaxXbyY(data.disciplineId, y);
+			let currentX = maxX._max.x;
+			if (currentX) currentX++;
+
+			x = currentX;
+		}
 		return this.prisma.subject.update({ where: { id: id }, data });
 	}
 

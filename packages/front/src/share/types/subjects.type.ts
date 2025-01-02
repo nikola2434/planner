@@ -33,7 +33,7 @@ export interface SubjectInterface {
 
 type typeOmitFields<T> = Omit<T, 'id' | 'createdAt' | 'updatedAt' | 'subject'>;
 
-export type SubjectFormInterface = typeOmitFields<SubjectInterface>;
+export type SubjectFormInterface = Omit<typeOmitFields<SubjectInterface>, 'x' | 'y'>;
 export type SubjectTypeFormInterface = typeOmitFields<SubjectTypeInterface> & { subject: string[] };
 
 export interface ColumnSubject extends SubjectInterface {

@@ -140,7 +140,6 @@ export const boardSlice = createSlice({
         state.isError = false;
         state.isLoading = false;
 
-        console.log(payload);
         state.typeSubjects.push(convertSubjectType(payload));
       })
       .addCase(deleteSubjectType.pending, (state) => {
@@ -198,6 +197,16 @@ export const boardSlice = createSlice({
         state.isError = false;
 
         state.subjects.push(convertSubject(payload));
+        if (payload.disciplineId) {
+          state.typeSubjects = state.typeSubjects.map((item) => {
+            if (item.id === payload.disciplineId) {
+              const { maxX, mapSemester, ...props } = item;
+              props.subject.push(payload);
+              return convertSubjectType(props);
+            }
+            return item;
+          });
+        }
       })
       .addCase(deleteSubject.pending, (state) => {
         state.isError = false;

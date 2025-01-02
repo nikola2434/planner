@@ -44,14 +44,14 @@ export class SubjectDto {
 	@IsOptional()
 	disciplineId: string
 
-	@IsNumber()
-	@Min(0)
-	x: number
+	// @IsNumber()
+	// @Min(0)
+	// x: number
 
-	@IsNumber()
-	@Min(0)
-	@Max(12)
-	y: number
+	// @IsNumber()
+	// @Min(0)
+	// @Max(12)
+	// y: number
 }
 
 export class moveSubjectDto {

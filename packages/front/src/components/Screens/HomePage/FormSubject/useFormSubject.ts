@@ -9,9 +9,7 @@ import { allActionsBoard } from '@/src/store/boards';
 
 const { confirm } = Modal;
 
-const defaultValues: SubjectFormInterface = {
-  y: 0,
-  x: 0,
+const defaultValues: Partial<SubjectFormInterface> = {
   name: '',
   countExam: 0,
   countLaboratory: 0,
@@ -48,7 +46,6 @@ export const useFormSubject = () => {
   }, [idRecord, setValue, getValues]);
 
   const onSubmit = handleSubmit(async function (data) {
-    const newData = { ...data, x: 0, y: 0 };
     if (mode === 'create') {
       const res = await dispatch(allActionsBoard.createSubject(data));
       if (allActionsBoard.createSubject.fulfilled.match(res) && res.payload.id) {
@@ -56,7 +53,7 @@ export const useFormSubject = () => {
       }
       close();
     } else {
-      dispatch(allActionsBoard.updateSubject({ id: values.id, data: newData })).then(() => close());
+      dispatch(allActionsBoard.updateSubject({ id: values.id, data })).then(() => close());
     }
   } as SubmitHandler<SubjectFormInterface>);
 

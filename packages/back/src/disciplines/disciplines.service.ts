@@ -4,13 +4,21 @@ import { PrismaService } from 'src/prisma.service';
 
 @Injectable()
 export class DisciplinesService {
-	constructor(private prisma: PrismaService) {}
+	constructor(
+		private prisma: PrismaService,
+	) {}
 
 	async create(data: DisciplineDto) {
+		await this.updateCoord(null, data.subject);
 		return this.prisma.discipline.create({
 			data: {
 				...data,
-				subject: { connect: data.subject.map((id) => ({ id })) }
+				subject: {
+					connect: data.subject.map((id) => ({ id }))
+				}
+			},
+			include: {
+				subject: true
 			}
 		});
 	}
@@ -20,6 +28,7 @@ export class DisciplinesService {
 	}
 
 	async update(data: DisciplineDto, id: string) {
+		await this.updateCoord(id, data.subject);
 		return this.prisma.discipline.update({
 			where: { id: id },
 			data: {
@@ -68,5 +77,27 @@ export class DisciplinesService {
 				subject: { connect: { id: subjectId } }
 			}
 		});
+	}
+
+	async updateCoord(disciplineId: string | null, subject: string[]) {
+		const subjects = await this.prisma.subject.findMany({ where: { id: { in: subject } } });
+
+		const maxX = await this.getMaxXbyY(disciplineId, 0);
+
+		let currentMaxX = maxX._max.x;
+		if (currentMaxX !== 0) currentMaxX++;
+		const updates = [];
+		for (let i = 0; i < subjects.length; i++) {
+			if (subjects[i].disciplineId !== disciplineId || disciplineId === null) {
+				updates.push(this.prisma.subject.update({ where: { id: subjects[i].id }, data: { y: 0, x: currentMaxX } }));
+				currentMaxX++;
+			}
+		}
+
+		return this.prisma.$transaction(updates);
+	}
+
+	async getMaxXbyY(disciplineId: string, y: number = 0) {
+		return this.prisma.subject.aggregate({ _max: { x: true }, where: { y, disciplineId } });
 	}
 }

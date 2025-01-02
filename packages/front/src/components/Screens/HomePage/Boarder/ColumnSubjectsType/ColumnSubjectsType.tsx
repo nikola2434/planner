@@ -13,7 +13,7 @@ const arrRows = Array(countRows).fill(0);
 export const ColumnSubjectsType: FC<ColumnSubjectType> = (props) => {
   const color: Color | null = props.color ? Color(props.color) : null;
   const backColorColumn = color ? Color(color).alpha(0.1).rgb().string() : null;
-  const colorText = color ? (color.isDark() ? Color(color).lighten(0.7).hex() : Color(color).darken(0.7).hex()) : null;
+  const colorText = color ? (color.isDark() ? Color(color).lighten(0.8).hex() : Color(color).darken(0.8).hex()) : null;
   const backOver = color ? Color(color).alpha(0.2).rgb().string() : null;
 
   return (
