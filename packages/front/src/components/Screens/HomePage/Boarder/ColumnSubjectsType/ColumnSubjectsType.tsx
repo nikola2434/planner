@@ -6,6 +6,7 @@ import style from './ColumnSubjectType.module.scss';
 import { Empty } from './Empty';
 import { fillArray } from '@/src/utils/fillArray';
 import Color from 'color';
+import { HeaderColumn } from './HeaderColumn';
 
 const countRows = COUNT_SEMESTER || 12;
 const arrRows = Array(countRows).fill(0);
@@ -18,15 +19,7 @@ export const ColumnSubjectsType: FC<ColumnSubjectType> = (props) => {
 
   return (
     <div className={style.column}>
-      <div
-        className={style.header}
-        style={{
-          backgroundColor: color?.hex(),
-          color: colorText,
-        }}
-      >
-        {props.name}
-      </div>
+      <HeaderColumn title={props.name} backColor={color.hex()} color={colorText} values={props} />
       <div className={style.rows} style={{ backgroundColor: backColorColumn }}>
         {arrRows.map((_, ind) => {
           let row: ColumnSubject[] | undefined = props.mapSemester[ind];

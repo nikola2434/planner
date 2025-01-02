@@ -4,9 +4,7 @@ import { PrismaService } from 'src/prisma.service';
 
 @Injectable()
 export class DisciplinesService {
-	constructor(
-		private prisma: PrismaService,
-	) {}
+	constructor(private prisma: PrismaService) {}
 
 	async create(data: DisciplineDto) {
 		await this.updateCoord(null, data.subject);
@@ -33,7 +31,7 @@ export class DisciplinesService {
 			where: { id: id },
 			data: {
 				...data,
-				subject: { connect: data.subject.map((id) => ({ id })) }
+				subject: { set: data.subject.map((item) => ({ id: item })) }
 			},
 			include: { subject: true }
 		});

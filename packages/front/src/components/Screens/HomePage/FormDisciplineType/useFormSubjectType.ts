@@ -38,7 +38,7 @@ export const useFormSubjectType = () => {
 
   useEffect(() => {
     if (!values) return;
-    reset({ ...values, subject: values.subject?.map((item) => item.id) });
+    reset({ color: values.color, name: values.name, subject: values.subject?.map((item) => item.id) });
   }, [values, reset]);
 
   useEffect(() => {
