@@ -22,7 +22,7 @@ export class DisciplinesService {
 	}
 
 	async getAll() {
-		return this.prisma.discipline.findMany({ include: { subject: true } });
+		return this.prisma.discipline.findMany({ include: { subject: true }, orderBy: { createdAt: 'asc' } });
 	}
 
 	async update(data: DisciplineDto, id: string) {
