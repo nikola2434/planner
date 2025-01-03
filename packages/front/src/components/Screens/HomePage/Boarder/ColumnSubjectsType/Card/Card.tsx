@@ -5,6 +5,7 @@ import style from './Card.module.scss';
 import { useDraggable } from '@dnd-kit/core';
 import clsx from 'clsx';
 import { ColorsCardType } from './Card.interface';
+import { CardTitle } from './CardTitle';
 
 interface CardSubjectProps {
   subject: ColumnSubject;
@@ -21,13 +22,12 @@ export const CardSubject: FC<CardSubjectProps> = ({ colors = {}, subject }) => {
     <Card
       size="small"
       title={
-        <div
-          {...listeners}
-          style={{ backgroundColor: colors.colorBackHead, color: colors.colorTitle }}
-          className={style.title}
-        >
-          {subject.name}
-        </div>
+        <CardTitle
+          listeners={listeners}
+          subject={subject}
+          colorBack={colors.colorBackHead}
+          colorTitle={colors.colorTitle}
+        />
       }
       style={{ width: 300, height: 130 }}
       className={clsx(style.card, isDragging && style.isDragging)}

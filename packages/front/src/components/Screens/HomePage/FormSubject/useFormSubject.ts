@@ -37,7 +37,18 @@ export const useFormSubject = () => {
   } = useForm<SubjectFormInterface>({ mode: 'onChange', defaultValues });
 
   useEffect(() => {
-    reset(values);
+    if (!values) return;
+    reset({
+      name: values.name,
+      countExam: values.countExam,
+      countLaboratory: values.countLaboratory,
+      disciplineId: values.disciplineId,
+      countLectures: values.countLectures,
+      countSelfWork: values.countSelfWork,
+      countSeminars: values.countSeminars,
+      countText: values.countText,
+      hoursLaboratory: values.hoursLaboratory,
+    });
   }, [values, reset]);
 
   useEffect(() => {
