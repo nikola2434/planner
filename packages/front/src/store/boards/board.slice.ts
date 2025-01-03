@@ -27,13 +27,22 @@ export const boardSlice = createSlice({
   reducers: {
     moveSync: (state, action: PayloadAction<{ subject: SubjectInterface; newSubjectTypeId?: string }>) => {
       const { newSubjectTypeId, subject } = action.payload;
-      state.subjects = [];
+      state.subjects = state.subjects.map((sub) => {
+        if (sub.id === subject.id) {
+          return convertSubject({
+            ...subject,
+            disciplineId: newSubjectTypeId ? newSubjectTypeId : subject.disciplineId,
+          });
+        }
+        return sub;
+      });
+      console.log(state.subjects);
       state.typeSubjects = state.typeSubjects.map((subjectType) => {
         if (subjectType.id === newSubjectTypeId) {
           subjectType.subject.push({ ...subject, disciplineId: newSubjectTypeId });
           const { maxX, mapSemester, ...props } = subjectType;
 
-          return convertSubjectType({ ...props }, state.subjects);
+          return convertSubjectType({ ...props }, []);
         }
 
         if (subjectType.id === subject.disciplineId) {
@@ -45,7 +54,7 @@ export const boardSlice = createSlice({
             subjects = subjectType.subject.filter((item) => item.id !== subject.id);
           }
           const { maxX, mapSemester, ...props } = subjectType;
-          return convertSubjectType({ ...props, subject: subjects }, state.subjects);
+          return convertSubjectType({ ...props, subject: subjects }, []);
         }
         return subjectType;
       });

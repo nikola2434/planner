@@ -9,9 +9,9 @@ export const SIDEBAR_DATA: ISidebarItem[] = [
     icon: SquareKanban,
     link: PUBLIC_PAGE.HOME,
   },
-  {
-    label: 'Настройки',
-    icon: Settings,
-    link: PUBLIC_PAGE.SETTINGS,
-  },
+  //   {
+  //     label: 'Настройки',
+  //     icon: Settings,
+  //     link: PUBLIC_PAGE.SETTINGS,
+  //   },
 ];
