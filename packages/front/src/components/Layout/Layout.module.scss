@@ -26,9 +26,30 @@
   }
 }
 
+@keyframes showContent {
+  from {
+    width: calc(100% - 15rem);
+  }
+  to {
+    width: calc(100% - 3rem);
+  }
+}
+
+@keyframes hideContent {
+  from {
+    width: calc(100% - 3rem);
+  }
+  to {
+    width: calc(100% - 15rem);
+  }
+}
+
 .hideSidebar {
   > aside {
     animation: hideSidebar 0.35s forwards;
+  }
+  > div {
+    animation: showContent 0.35s forwards;
   }
 }
 
@@ -36,10 +57,7 @@
   > aside {
     animation: showSidebar 0.35s forwards;
   }
-
-  @media (min-width: 15rem) {
-    .showSidebar > aside {
-      animation: none;
-    }
+  > div {
+    animation: hideContent 0.35s forwards;
   }
 }
