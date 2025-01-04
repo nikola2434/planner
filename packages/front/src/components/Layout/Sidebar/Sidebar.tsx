@@ -5,12 +5,12 @@ import { SIDEBAR_DATA } from './sidebar.data';
 import style from './Sidebar.module.scss';
 import { PrintVersion } from './PrintVersion';
 
-export const Sidebar: FC<{ toggle: () => void }> = ({ toggle }) => {
+export const Sidebar: FC<{ toggle: () => void; show: boolean }> = ({ toggle, show }) => {
   return (
     <aside className={style.sidebar}>
       <HeaderSidebar toggle={toggle} />
       <Menus menu={SIDEBAR_DATA} />
-      <PrintVersion />
+      <PrintVersion hide={!show} />
     </aside>
   );
 };

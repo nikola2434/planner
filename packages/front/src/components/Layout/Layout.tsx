@@ -14,7 +14,7 @@ export const Layout: FC<PropsWithChildren> = ({ children }) => {
   return (
     <MainProvider>
       <main className={cn(style.main, isShowedSidebar ? style.showSidebar : style.hideSidebar)}>
-        <Sidebar toggle={toggleSidebar} />
+        <Sidebar toggle={toggleSidebar} show={isShowedSidebar} />
         <Content>{children}</Content>
       </main>
     </MainProvider>

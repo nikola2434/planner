@@ -5,4 +5,9 @@
   user-select: none;
   color: var(--color-gray-8);
   font-size: 0.9rem;
+  opacity: 1;
+  transition: all 0.2s ease-in-out;
+}
+.hide {
+  opacity: 0;
 }
