@@ -1,16 +1,20 @@
-import { IsArray, IsHexColor, IsNumber, IsOptional, IsString, Min } from 'class-validator'
+import { IsArray, IsHexColor, IsNumber, IsOptional, IsString, Min } from 'class-validator';
 
 export class DisciplineDto {
 	@IsString()
-	@IsOptional()
-	name: string
+	name: string;
 
 	@IsOptional()
-    @IsHexColor()
-	color?: string
+	@IsHexColor()
+	color?: string;
 
 	@IsArray()
 	@IsOptional()
 	@IsString({ each: true })
-	subject?: string[]
+	subject?: string[];
+
+	@IsNumber()
+	@IsOptional()
+	@Min(0)
+	order?: number;
 }

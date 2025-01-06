@@ -7,10 +7,22 @@ export class DisciplinesService {
 	constructor(private prisma: PrismaService) {}
 
 	async create(data: DisciplineDto) {
-		await this.updateCoord(null, data.subject);
+		let order = data.order;
+		const updates: any[] = [this.updateCoord(null, data.subject)];
+
+		if (order) {
+			updates.push(this.updateOrderWhenCreate(order));
+		} else {
+			const allDisciplines = await this.getAll();
+			order = allDisciplines.length++;
+		}
+
+		await Promise.all(updates);
+
 		return this.prisma.discipline.create({
 			data: {
 				...data,
+				order,
 				subject: {
 					connect: data.subject.map((id) => ({ id }))
 				}
@@ -22,11 +34,11 @@ export class DisciplinesService {
 	}
 
 	async getAll() {
-		return this.prisma.discipline.findMany({ include: { subject: true }, orderBy: { createdAt: 'asc' } });
+		return this.prisma.discipline.findMany({ include: { subject: true }, orderBy: { order: 'asc' } });
 	}
 
-	async update(data: DisciplineDto, id: string) {
-		await this.updateCoord(id, data.subject);
+	async update(data: Partial<DisciplineDto>, id: string) {
+		await Promise.all([this.updateOrder(id, data.order), this.updateCoord(id, data.subject)]);
 		return this.prisma.discipline.update({
 			where: { id: id },
 			data: {
@@ -38,6 +50,7 @@ export class DisciplinesService {
 	}
 
 	async delete(id: string) {
+		await this.updateOrder(id, Number.MAX_SAFE_INTEGER);
 		return this.prisma.discipline.delete({
 			where: {
 				id
@@ -97,5 +110,54 @@ export class DisciplinesService {
 
 	async getMaxXbyY(disciplineId: string, y: number = 0) {
 		return this.prisma.subject.aggregate({ _max: { x: true }, where: { y, disciplineId } });
+	}
+
+	async getDisciplineByID(id: string) {
+		const discipline = await this.prisma.discipline.findFirst({ where: { id } });
+		if (!discipline) throw new NotFoundException('Discipline not found');
+		return discipline;
+	}
+
+	async updateOrderWhenCreate(newOrder: number) {
+		return await this.prisma.discipline.updateMany({
+			where: { order: { gte: newOrder } },
+			data: {
+				order: { increment: 1 }
+			}
+		});
+	}
+
+	async updateOrder(id: string, newOrder: number) {
+		const discipline = await this.getById(id);
+
+		if (newOrder > discipline.order) {
+			return await this.prisma.discipline.updateMany({
+				where: {
+					order: {
+						gte: discipline.order,
+						lte: newOrder
+					}
+				},
+				data: {
+					order: {
+						decrement: 1
+					}
+				}
+			});
+		} else if (newOrder < discipline.order) {
+			return await this.prisma.discipline.updateMany({
+				where: {
+					order: {
+						gte: newOrder,
+						lte: discipline.order
+					}
+				},
+				data: {
+					order: {
+						increment: 1
+					}
+				}
+			});
+		}
 	}
 }

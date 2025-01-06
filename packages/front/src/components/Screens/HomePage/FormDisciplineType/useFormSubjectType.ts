@@ -10,7 +10,7 @@ import { isObject } from '@/src/share/guards';
 
 const { confirm } = Modal;
 
-const defaultValues: SubjectTypeFormInterface = {
+const defaultValues: Partial<SubjectTypeFormInterface> = {
   name: '',
   subject: [],
   color: '#1677FF',

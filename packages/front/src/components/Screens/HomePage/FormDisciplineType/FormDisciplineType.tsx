@@ -74,6 +74,27 @@ export const DriverDisciplineType = () => {
         </div>
 
         <Form.Item
+          label={'Порядок'}
+          validateStatus={errors.order ? 'error' : 'success'}
+          help={errors.order && errors['order']?.message}
+          style={{ width: '100%' }}
+        >
+          <Controller
+            control={control}
+            name="order"
+            render={({ field }) => (
+              <Select
+                {...field}
+                style={{ width: '100%' }}
+                options={options}
+                disabled={isCallback}
+                prefix={nameRecord}
+              />
+            )}
+          />
+        </Form.Item>
+
+        <Form.Item
           label={'Цвет'}
           validateStatus={errors.color ? 'error' : 'success'}
           help={errors.color && errors['color']?.message}
