@@ -73,7 +73,7 @@ export const DriverDisciplineType = () => {
           </Tooltip>
         </div>
 
-        <Form.Item
+        {/* <Form.Item
           label={'Порядок'}
           validateStatus={errors.order ? 'error' : 'success'}
           help={errors.order && errors['order']?.message}
@@ -92,7 +92,7 @@ export const DriverDisciplineType = () => {
               />
             )}
           />
-        </Form.Item>
+        </Form.Item> */}
 
         <Form.Item
           label={'Цвет'}

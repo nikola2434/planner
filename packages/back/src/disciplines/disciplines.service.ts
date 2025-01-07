@@ -6,7 +6,7 @@ import { PrismaService } from 'src/prisma.service';
 export class DisciplinesService {
 	constructor(private prisma: PrismaService) {}
 
-	async create(data: DisciplineDto) {
+	async create(idTab: string, data: DisciplineDto) {
 		let order = data.order;
 		const updates: any[] = [this.updateCoord(null, data.subject)];
 
@@ -25,6 +25,9 @@ export class DisciplinesService {
 				order,
 				subject: {
 					connect: data.subject.map((id) => ({ id }))
+				},
+				tab: {
+					connect: { id: idTab }
 				}
 			},
 			include: {
@@ -33,8 +36,12 @@ export class DisciplinesService {
 		});
 	}
 
-	async getAll() {
-		return this.prisma.discipline.findMany({ include: { subject: true }, orderBy: { order: 'asc' } });
+	async getAll(idTab?: string) {
+		return this.prisma.discipline.findMany({
+			where: { tabId: idTab },
+			include: { subject: true },
+			orderBy: { order: 'asc' }
+		});
 	}
 
 	async update(data: Partial<DisciplineDto>, id: string) {
@@ -43,7 +50,7 @@ export class DisciplinesService {
 			where: { id: id },
 			data: {
 				...data,
-				subject: { set: data.subject.map((item) => ({ id: item })) }
+				subject: { set: data.subject ? data.subject.map((item) => ({ id: item })) : undefined }
 			},
 			include: { subject: true }
 		});
@@ -136,7 +143,8 @@ export class DisciplinesService {
 					order: {
 						gte: discipline.order,
 						lte: newOrder
-					}
+					},
+					tabId: discipline.tabId
 				},
 				data: {
 					order: {
@@ -150,7 +158,8 @@ export class DisciplinesService {
 					order: {
 						gte: newOrder,
 						lte: discipline.order
-					}
+					},
+					tabId: discipline.tabId
 				},
 				data: {
 					order: {

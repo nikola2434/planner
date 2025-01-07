@@ -19,13 +19,13 @@ export class DisciplinesController {
 	constructor(private readonly disciplinesService: DisciplinesService) {}
 
 	@UsePipes(new ValidationPipe())
-	@Post()
+	@Post(':id')
 	@HttpCode(200)
-	async create(@Body() dto: DisciplineDto) {
-		return this.disciplinesService.create(dto);
+	async create(@Param('id') id: string, @Body() dto: DisciplineDto) {
+		return this.disciplinesService.create(id, dto);
 	}
 
-	@Get()
+	@Get(":id")
 	async getAll() {
 		return this.disciplinesService.getAll();
 	}

@@ -7,6 +7,17 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
+model Tab {
+    id        String   @id @default(cuid())
+    createdAt DateTime @default(now()) @map("created_at")
+    updatedAt DateTime @updatedAt @map("updated_at")
+
+    name        String
+    disciplines Discipline[]
+
+    @@map("tab")
+}
+
 model Discipline {
     id        String   @id @default(cuid())
     createdAt DateTime @default(now()) @map("created_at")
@@ -17,6 +28,9 @@ model Discipline {
     order Int     @unique
 
     subject Subject[]
+
+    tab   Tab?    @relation(fields: [tabId], references: [id])
+    tabId String? @map("tab_id")
 
     @@map("discipline")
 }
