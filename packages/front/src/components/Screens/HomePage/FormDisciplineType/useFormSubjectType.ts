@@ -7,6 +7,7 @@ import { Modal } from 'antd';
 import { subjectActions } from '@/src/store/subject';
 import { allActionsBoard } from '@/src/store/boards';
 import { isObject } from '@/src/share/guards';
+import { useParams } from 'react-router-dom';
 
 const { confirm } = Modal;
 
@@ -26,6 +27,7 @@ export const useFormSubjectType = () => {
   const actionsSubject = useActionsCreators(subjectActions);
   const actionsBoard = useActionsCreators(allActionsBoard);
   const dispatch = useAppDispatch();
+  const { tabId } = useParams<{ tabId?: string }>();
 
   const {
     control,
@@ -53,16 +55,16 @@ export const useFormSubjectType = () => {
       data.color = '#' + color.toHex();
     }
     if (mode === 'create') {
-      const res = await dispatch(allActionsBoard.createSubjectType(data));
+      const res = await dispatch(allActionsBoard.createSubjectType({ idTab: tabId, data }));
       if (allActionsBoard.createSubjectType.fulfilled.match(res) && res.payload.id) {
         actionsSubject.setIdRecord(res.payload.id);
       }
       close();
-      actionsBoard.getAllSubjects();
+      if (tabId) actionsBoard.getTab(tabId);
     } else {
       dispatch(allActionsBoard.updateSubjectType({ id: values.id, data: data })).then(() => {
         close();
-        actionsBoard.getAllSubjects();
+        if (tabId) actionsBoard.getTab(tabId);
       });
     }
   } as SubmitHandler<SubjectTypeFormInterface>);

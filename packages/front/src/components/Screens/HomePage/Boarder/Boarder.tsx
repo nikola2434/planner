@@ -6,11 +6,14 @@ import { ColumnSubjectsType } from './ColumnSubjectsType/ColumnSubjectsType';
 import { DndContext, DragOverlay, closestCenter } from '@dnd-kit/core';
 import { CardSubject } from './ColumnSubjectsType/Card';
 import { useBoarder } from './useBoarder';
+import type { FC } from 'react';
+import { MainToolbar } from '../Toolbar';
 
-export const Boarder = () => {
-  const { handleDragEnd, handleDragStart, typeSubjects, active } = useBoarder();
+export const Boarder: FC<{ id: string }> = ({ id }) => {
+  const { handleDragEnd, handleDragStart, typeSubjects, active } = useBoarder(id);
   return (
     <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
+      <MainToolbar />
       <div className={style.board}>
         <LeftSidebar />
         {typeSubjects.map((item) => (

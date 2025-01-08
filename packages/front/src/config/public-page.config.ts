@@ -1,7 +1,7 @@
 class PublicPage {
-	HOME = '/'
+  HOME = '/';
 
-	SETTINGS = '/settings'
+  SETTINGS = '/settings';
 }
 
-export const PUBLIC_PAGE = new PublicPage()
+export const PUBLIC_PAGE = new PublicPage();

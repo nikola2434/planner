@@ -20,8 +20,8 @@ export const subjectApi = {
     return classicAxios.delete<SubjectTypeInterface>(`disciplines/${id}`).then((data) => data.data);
   },
 
-  async createSubjectType(data: SubjectTypeFormInterface) {
-    return classicAxios.post<SubjectTypeInterface>('disciplines', data).then((data) => data.data);
+  async createSubjectType(tabId: string, data: SubjectTypeFormInterface) {
+    return classicAxios.post<SubjectTypeInterface>(`disciplines/${tabId}`, data).then((data) => data.data);
   },
 
   async moveSubject(id: string, data: MoveInterface) {

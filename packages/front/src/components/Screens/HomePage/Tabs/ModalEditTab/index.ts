@@ -1,0 +1,1 @@
+export { ModalEditTab } from './ModalEditTab';

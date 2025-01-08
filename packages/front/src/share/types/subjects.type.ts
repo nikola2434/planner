@@ -6,6 +6,8 @@ export interface SubjectTypeInterface {
   name: string;
   color?: string;
 
+  tabId: string;
+
   order: number;
 
   subject: SubjectInterface[];

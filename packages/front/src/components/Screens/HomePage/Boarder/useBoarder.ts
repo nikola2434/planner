@@ -1,14 +1,20 @@
 import { useActionsCreators, useStateSelector } from '@/src/hooks';
 import type { ColumnSubject } from '@/src/share/types';
 import { allActionsBoard } from '@/src/store/boards';
-import { useLayoutEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import type { ColorsCardType } from './ColumnSubjectsType/Card/Card.interface';
 import type { DragEndEvent, DragStartEvent } from '@dnd-kit/core';
 
-export const useBoarder = () => {
-  const { subjects, typeSubjects } = useStateSelector((state) => state.board);
+export const useBoarder = (id: string) => {
+  const { subjects, typeSubjects, isLoading } = useStateSelector((state) => state.board);
   const [subjectsMap, setSubjectsMap] = useState<null | Record<string, ColumnSubject>>(null);
   const actionsBoard = useActionsCreators(allActionsBoard);
+
+  useEffect(() => {
+    actionsBoard.getTab(id).then(() => {
+      actionsBoard.updateResultRow();
+    });
+  }, [id]);
 
   useLayoutEffect(() => {
     if (!Array.isArray(subjects)) {

@@ -1,0 +1,7 @@
+.main_toolbar {
+  :global {
+    .ant-space-item:last-child {
+      margin: 0 0 0 auto !important;
+    }
+  }
+}

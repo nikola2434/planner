@@ -1,17 +1,17 @@
-import { subjectApi } from '@/src/services';
+import { subjectApi, tabsApi } from '@/src/services';
 import type {
   MoveInterface,
   SubjectFormInterface,
   SubjectInterface,
   SubjectTypeFormInterface,
   SubjectTypeInterface,
+  Tab,
 } from '@/src/share/types';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { RootState } from '../store';
 
-export const getAllSubjects = createAsyncThunk<SubjectTypeInterface[]>('board/getAllSubjects', async (_, thunkApi) => {
+export const getTab = createAsyncThunk<Tab, string>('board/getTab', async (tabId, thunkApi) => {
   try {
-    return await subjectApi.getAllSubjectsType();
+    return await tabsApi.getTab(tabId);
   } catch (error) {
     console.error(error);
     return thunkApi.rejectWithValue(error);
@@ -30,17 +30,17 @@ export const updateSubjectType = createAsyncThunk<SubjectTypeInterface, { id: st
   },
 );
 
-export const createSubjectType = createAsyncThunk<SubjectTypeInterface, SubjectTypeFormInterface>(
-  'board/createSubjectType',
-  async (params, thunkApi) => {
-    try {
-      return await subjectApi.createSubjectType(params);
-    } catch (error) {
-      console.error(error);
-      return thunkApi.rejectWithValue(error);
-    }
-  },
-);
+export const createSubjectType = createAsyncThunk<
+  SubjectTypeInterface,
+  { idTab: string; data: SubjectTypeFormInterface }
+>('board/createSubjectType', async (params, thunkApi) => {
+  try {
+    return await subjectApi.createSubjectType(params.idTab, params.data);
+  } catch (error) {
+    console.error(error);
+    return thunkApi.rejectWithValue(error);
+  }
+});
 
 export const deleteSubjectType = createAsyncThunk<SubjectTypeInterface, string>(
   'board/deleteSubjectType',

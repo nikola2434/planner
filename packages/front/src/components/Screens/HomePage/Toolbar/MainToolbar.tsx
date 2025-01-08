@@ -1,36 +1,21 @@
 import { Toolbar } from '@/ui/Toolbar';
-import { Button, Dropdown, MenuProps } from 'antd';
+import { Button, Dropdown } from 'antd';
 import { MenuItemsCreate } from './menu-create.data';
-import { Plus } from 'lucide-react';
-import { useActionsCreators } from '@/src/hooks';
-import { subjectTypeActions } from '@/src/store/subjectType';
-import { subjectActions } from '@/src/store/subject';
+import { EllipsisVertical, Plus } from 'lucide-react';
+import { useToolbar } from './useToolbar';
+import { MenuItemsSettings } from './menu-settings.data';
+import style from './Toolbar.module.scss';
 
 export const MainToolbar = () => {
-  const actionsTypeSubject = useActionsCreators(subjectTypeActions);
-  const actionsSubject = useActionsCreators(subjectActions);
-
-  const onClickHandle: MenuProps['onClick'] = function ({ key }) {
-    switch (key) {
-      case 'typeDiscipline': {
-        actionsTypeSubject.create();
-        break;
-      }
-
-      case 'discipline': {
-        actionsSubject.create();
-        break;
-      }
-
-      default:
-        break;
-    }
-  };
+  const { onClickHandleCreateBtn, onClickHandleSettingsBtn } = useToolbar();
 
   return (
-    <Toolbar>
-      <Dropdown menu={{ items: MenuItemsCreate, onClick: onClickHandle }} placement="bottomLeft">
+    <Toolbar className={style.main_toolbar}>
+      <Dropdown menu={{ items: MenuItemsCreate, onClick: onClickHandleCreateBtn }} placement="bottomLeft">
         <Button icon={<Plus />}>Создать</Button>
+      </Dropdown>
+      <Dropdown placement="bottomLeft" menu={{ items: MenuItemsSettings, onClick: onClickHandleSettingsBtn }}>
+        <Button type="text" icon={<EllipsisVertical />} />
       </Dropdown>
     </Toolbar>
   );

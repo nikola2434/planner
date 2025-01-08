@@ -42,7 +42,10 @@ export class TabsService {
 	}
 
 	async getById(id: string) {
-		const tab = await this.prisma.tab.findFirst({ where: { id } });
+		const tab = await this.prisma.tab.findFirst({
+			where: { id },
+			include: { disciplines: { include: { subject: true } } }
+		});
 		if (!tab) throw new NotFoundException('Tab not found');
 		return tab;
 	}

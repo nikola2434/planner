@@ -9,6 +9,7 @@ export const Routing = () => {
     <>
       <Routes>
         <Route path={PUBLIC_PAGE.HOME} element={<HomePage />} />
+        <Route path={PUBLIC_PAGE.HOME + ':tabId'} element={<HomePage />} />
         <Route path={PUBLIC_PAGE.SETTINGS} element={<SettingsPage />} />
 
         <Route path="*" element={<PageError />} />

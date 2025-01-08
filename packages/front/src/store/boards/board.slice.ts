@@ -6,7 +6,7 @@ import {
   createSubjectType,
   deleteSubject,
   deleteSubjectType,
-  getAllSubjects,
+  getTab,
   updateSubject,
   updateSubjectType,
 } from './boardActions';
@@ -36,7 +36,6 @@ export const boardSlice = createSlice({
         }
         return sub;
       });
-      console.log(state.subjects);
       state.typeSubjects = state.typeSubjects.map((subjectType) => {
         if (subjectType.id === newSubjectTypeId) {
           subjectType.subject.push({ ...subject, disciplineId: newSubjectTypeId });
@@ -96,22 +95,22 @@ export const boardSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getAllSubjects.pending, (state, action) => {
+      .addCase(getTab.pending, (state, action) => {
         state.isLoading = true;
         state.isError = false;
       })
-      .addCase(getAllSubjects.rejected, (state) => {
+      .addCase(getTab.rejected, (state) => {
         state.isError = true;
         state.isLoading = false;
       })
-      .addCase(getAllSubjects.fulfilled, (state, { payload }) => {
+      .addCase(getTab.fulfilled, (state, { payload }) => {
         state.isError = false;
         state.isLoading = false;
-
+        
         const subjectsType: ColumnSubjectType[] = [];
         const subjects: ColumnSubject[] = [];
-        for (let i = 0; i < payload.length; i++) {
-          const item = payload[i];
+        for (let i = 0; i < payload.disciplines.length; i++) {
+          const item = payload.disciplines[i];
           const subjectTypeConvert = convertSubjectType(item, subjects);
 
           subjectsType.push(subjectTypeConvert);
