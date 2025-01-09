@@ -9,11 +9,13 @@ interface EmptyProps {
   id: string;
   isLast?: boolean;
   colorOver?: string;
+  disabled: boolean;
 }
 
-export const Empty: FC<PropsWithChildren<EmptyProps>> = ({ children, id, isLast = false, colorOver }) => {
+export const Empty: FC<PropsWithChildren<EmptyProps>> = ({ children, id, isLast = false, colorOver, disabled }) => {
   const { setNodeRef, isOver } = useDroppable({
     id,
+    disabled,
   });
 
   return (

@@ -13,8 +13,9 @@ export class DisciplinesService {
 		if (order) {
 			updates.push(this.updateOrderWhenCreate(order));
 		} else {
-			const allDisciplines = await this.getAll();
-			order = allDisciplines.length++;
+			const allDisciplines = await this.getAll(idTab);
+			const newOrder = allDisciplines.length + 1;
+			order = newOrder;
 		}
 
 		await Promise.all(updates);
@@ -57,7 +58,8 @@ export class DisciplinesService {
 	}
 
 	async delete(id: string) {
-		await this.updateOrder(id, Number.MAX_SAFE_INTEGER);
+		const MAX_ORDER = 2147483647;
+		await this.updateOrder(id, MAX_ORDER);
 		return this.prisma.discipline.delete({
 			where: {
 				id
@@ -67,10 +69,12 @@ export class DisciplinesService {
 	}
 
 	async getById(id: string) {
-		return this.prisma.discipline.findFirst({
+		const discipline = await this.prisma.discipline.findFirst({
 			where: { id },
 			include: { subject: true }
 		});
+		if (!discipline) throw new NotFoundException('Discipline not found');
+		return discipline;
 	}
 
 	async removeSubject(disciplineId: string, subjectId: string) {
@@ -137,11 +141,15 @@ export class DisciplinesService {
 	async updateOrder(id: string, newOrder: number) {
 		const discipline = await this.getById(id);
 
+		if (newOrder === discipline?.order) {
+			return;
+		}
+
 		if (newOrder > discipline.order) {
-			return await this.prisma.discipline.updateMany({
+			await this.prisma.discipline.updateMany({
 				where: {
 					order: {
-						gte: discipline.order,
+						gte: discipline.order + 1,
 						lte: newOrder
 					},
 					tabId: discipline.tabId
@@ -153,11 +161,11 @@ export class DisciplinesService {
 				}
 			});
 		} else if (newOrder < discipline.order) {
-			return await this.prisma.discipline.updateMany({
+			await this.prisma.discipline.updateMany({
 				where: {
 					order: {
 						gte: newOrder,
-						lte: discipline.order
+						lte: discipline.order - 1
 					},
 					tabId: discipline.tabId
 				},

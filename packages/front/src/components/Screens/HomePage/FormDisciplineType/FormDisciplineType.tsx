@@ -7,10 +7,14 @@ import { Plus } from 'lucide-react';
 export const DriverDisciplineType = () => {
   const {
     subjectType: { mode, open, isCallback, nameRecord },
-    board: { subjects: data },
+    board: { subjects: data, typeSubjects },
   } = useStateSelector((store) => store);
 
   const options: SelectProps['options'] = (data || []).map((item) => ({ label: item.name, value: item.id }));
+  const optionsOrder: SelectProps['options'] = Array.from({ length: typeSubjects.length + 1 }, (_, ind) => ({
+    label: ind + 1,
+    value: ind + 1,
+  }));
 
   const { closeDrawer, control, errors, onSubmit, openSubjectForm } = useFormSubjectType();
 
@@ -73,7 +77,7 @@ export const DriverDisciplineType = () => {
           </Tooltip>
         </div>
 
-        {/* <Form.Item
+        <Form.Item
           label={'Порядок'}
           validateStatus={errors.order ? 'error' : 'success'}
           help={errors.order && errors['order']?.message}
@@ -86,13 +90,12 @@ export const DriverDisciplineType = () => {
               <Select
                 {...field}
                 style={{ width: '100%' }}
-                options={options}
-                disabled={isCallback}
-                prefix={nameRecord}
+                options={optionsOrder}
+                defaultValue={typeSubjects.length + 1}
               />
             )}
           />
-        </Form.Item> */}
+        </Form.Item>
 
         <Form.Item
           label={'Цвет'}

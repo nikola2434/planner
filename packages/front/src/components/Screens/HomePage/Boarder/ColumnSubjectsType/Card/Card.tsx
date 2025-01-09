@@ -14,7 +14,7 @@ interface CardSubjectProps {
 
 export const CardSubject: FC<CardSubjectProps> = ({ colors = {}, subject }) => {
   const { attributes, listeners, setNodeRef, isDragging } = useDraggable({
-    id: subject.id,
+    id: `card_${subject.id}`,
     data: { ...colors },
   });
 

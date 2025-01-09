@@ -30,6 +30,18 @@ export const updateSubjectType = createAsyncThunk<SubjectTypeInterface, { id: st
   },
 );
 
+export const patchSubjectType = createAsyncThunk<
+  SubjectTypeInterface,
+  { id: string; data: Partial<SubjectTypeFormInterface> }
+>('board/patchSubjectType', async (params, thunkApi) => {
+  try {
+    return await subjectApi.patchSubjectType(params.id, params.data);
+  } catch (error) {
+    console.error(error);
+    return thunkApi.rejectWithValue(error);
+  }
+});
+
 export const createSubjectType = createAsyncThunk<
   SubjectTypeInterface,
   { idTab: string; data: SubjectTypeFormInterface }

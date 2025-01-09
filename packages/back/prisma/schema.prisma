@@ -25,7 +25,7 @@ model Discipline {
 
     name  String
     color String?
-    order Int     @unique
+    order Int
 
     subject Subject[]
 

@@ -59,6 +59,36 @@ export const boardSlice = createSlice({
       });
     },
 
+    changeOrderColumn: (state, action: PayloadAction<{ typeSubjectId: string; newOrder: number }>) => {
+      const { typeSubjectId, newOrder } = action.payload;
+
+      const prevSubjectType = state.typeSubjects.find((item) => item.id === typeSubjectId);
+      if (!prevSubjectType) return;
+
+      const prevOrder = prevSubjectType.order;
+      const isMore = prevOrder < newOrder;
+
+      state.typeSubjects = state.typeSubjects.map((item) => {
+        if (item.id === typeSubjectId) {
+          return { ...item, order: newOrder };
+        }
+
+        if (isMore) {
+          if (item.order > prevOrder && item.order <= newOrder) {
+            return { ...item, order: item.order - 1 };
+          }
+        } else {
+          if (item.order >= newOrder && item.order < prevOrder) {
+            return { ...item, order: item.order + 1 };
+          }
+        }
+
+        return item;
+      });
+
+      state.typeSubjects.sort((a, b) => a.order - b.order);
+    },
+
     updateResultRow: (state) => {
       const res: Record<number, ResultRowType> = {};
       for (let i = 0; i < COUNT_SEMESTER; i++) {
@@ -106,19 +136,19 @@ export const boardSlice = createSlice({
       .addCase(getTab.fulfilled, (state, { payload }) => {
         state.isError = false;
         state.isLoading = false;
-        
+
         const subjectsType: ColumnSubjectType[] = [];
         const subjects: ColumnSubject[] = [];
+        payload.disciplines.sort((a, b) => a.order - b.order);
         for (let i = 0; i < payload.disciplines.length; i++) {
           const item = payload.disciplines[i];
           const subjectTypeConvert = convertSubjectType(item, subjects);
 
           subjectsType.push(subjectTypeConvert);
         }
-
         state.subjects = subjects;
         state.typeSubjects = subjectsType;
-        console.log(subjectsType);
+        console.log(state.typeSubjects);
       })
       .addCase(updateSubjectType.pending, (state) => {
         state.isLoading = true;

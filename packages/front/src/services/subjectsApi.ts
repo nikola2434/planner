@@ -16,6 +16,10 @@ export const subjectApi = {
     return classicAxios.put<SubjectTypeInterface>(`disciplines/${id}`, data).then((data) => data.data);
   },
 
+  async patchSubjectType(id: string, data: Partial<SubjectFormInterface>) {
+    return classicAxios.patch<SubjectTypeInterface>(`disciplines/${id}`, data).then((data) => data.data);
+  },
+
   async deleteSubjectType(id: string) {
     return classicAxios.delete<SubjectTypeInterface>(`disciplines/${id}`).then((data) => data.data);
   },

@@ -11,15 +11,15 @@ import { useParams } from 'react-router-dom';
 
 const { confirm } = Modal;
 
+function hasToHex(value: unknown): value is { toHex: () => string } {
+  return isObject(value) && typeof value.toHex === 'function';
+}
+
 const defaultValues: Partial<SubjectTypeFormInterface> = {
   name: '',
   subject: [],
   color: '#1677FF',
 };
-
-function hasToHex(value: unknown): value is { toHex: () => string } {
-  return isObject(value) && typeof value.toHex === 'function';
-}
 
 export const useFormSubjectType = () => {
   const { values, idRecord, mode } = useStateSelector((store) => store.subjectType);
@@ -40,7 +40,12 @@ export const useFormSubjectType = () => {
 
   useEffect(() => {
     if (!values) return;
-    reset({ color: values.color, name: values.name, subject: values.subject?.map((item) => item.id) });
+    reset({
+      color: values.color,
+      name: values.name,
+      subject: values.subject?.map((item) => item.id),
+      order: values.order,
+    });
   }, [values, reset]);
 
   useEffect(() => {
