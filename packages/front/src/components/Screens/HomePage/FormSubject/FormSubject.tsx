@@ -72,7 +72,7 @@ export const DriverDiscipline = () => {
           </Tooltip>
         </div>
         <Form.Item
-          label={'Лекций '}
+          label={'Академ. часов лекций'}
           validateStatus={errors.countLectures ? 'error' : 'success'}
           help={errors.countLectures && errors['countLectures']?.message}
         >
@@ -84,7 +84,7 @@ export const DriverDiscipline = () => {
           />
         </Form.Item>
         <Form.Item
-          label={'Семинаров'}
+          label={'Академ. часов семинаров'}
           validateStatus={errors.countSeminars ? 'error' : 'success'}
           help={errors.countSeminars && errors['countSeminars']?.message}
         >
@@ -96,8 +96,7 @@ export const DriverDiscipline = () => {
           />
         </Form.Item>
         <Form.Item
-          label={'Лабараторных'}
-          tooltip={'Количество лабараторных работ в семестре'}
+          label={'Академ. часов лабораторных работ'}
           validateStatus={errors.countLaboratory ? 'error' : 'success'}
           help={errors.countLaboratory && errors['countLaboratory']?.message}
         >
@@ -109,8 +108,7 @@ export const DriverDiscipline = () => {
           />
         </Form.Item>
         <Form.Item
-          label={'Лабараторных'}
-          tooltip={'Часов лабараторных работ в семестре'}
+          label={'Количество лабораторных работ'}
           validateStatus={errors.hoursLaboratory ? 'error' : 'success'}
           help={errors.hoursLaboratory && errors['hoursLaboratory']?.message}
         >
@@ -123,7 +121,7 @@ export const DriverDiscipline = () => {
         </Form.Item>
 
         <Form.Item
-          label={'Самостоятельные работы'}
+          label={'Академ. часов самостоятельной работы'}
           validateStatus={errors.countSelfWork ? 'error' : 'success'}
           help={errors.countSelfWork && errors['countSelfWork']?.message}
         >
@@ -135,7 +133,7 @@ export const DriverDiscipline = () => {
           />
         </Form.Item>
         <Form.Item
-          label={'Контрольные работы'}
+          label={'Академ. часов на контроные мероприятия'}
           validateStatus={errors.countText ? 'error' : 'success'}
           help={errors.countText && errors['countText']?.message}
         >
@@ -147,7 +145,7 @@ export const DriverDiscipline = () => {
           />
         </Form.Item>
         <Form.Item
-          label={'Атестация'}
+          label={'Академ. часов на аттестацию'}
           validateStatus={errors.countExam ? 'error' : 'success'}
           help={errors.countExam && errors['countExam']?.message}
         >
