@@ -32,10 +32,8 @@ export const useTabs = () => {
     navigate(PUBLIC_PAGE.HOME + id);
   };
 
-  const onEdit = (targetKey: TargetKey, action: 'add' | 'remove') => {
-    if (action === 'add') {
-      actionsTabs.showCreateWindow();
-    }
+  const onEdit = () => {
+    actionsTabs.showCreateWindow();
   };
 
   return { isLoading, tabs, handleTabChange, onEdit, activeTab };

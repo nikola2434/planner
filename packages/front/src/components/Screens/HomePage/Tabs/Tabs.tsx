@@ -1,8 +1,9 @@
-import { Tabs } from 'antd';
+import { Button, Tabs, Tooltip } from 'antd';
 import { useTabs } from './useTabs';
 import { Boarder } from '../Boarder';
 import { ModalEditTab } from './ModalEditTab';
 import style from './Tabs.module.scss';
+import { Plus } from 'lucide-react';
 
 const { TabPane } = Tabs;
 export const Tab = () => {
@@ -12,8 +13,13 @@ export const Tab = () => {
       <Tabs
         activeKey={activeTab}
         onChange={handleTabChange}
-        type="editable-card"
-        onEdit={onEdit}
+        tabBarExtraContent={{
+          left: (
+            <Tooltip title="Создать панель">
+              <Button type="text" icon={<Plus />} style={{ margin: '0px 15px' }} onClick={onEdit} />
+            </Tooltip>
+          ),
+        }}
         size="large"
         className={style.tabs_custom}
       >
