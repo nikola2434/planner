@@ -14,7 +14,7 @@ export const HeaderSidebar: FC<{ toggle: () => void }> = ({ toggle }) => {
       </button>
       <Link to={PUBLIC_PAGE.HOME} className={style.logo}>
         {/* <img alt="ИУ-10" loading="lazy" draggable={false} src={Logo} /> */}
-        <span>Рассписание</span>
+        <span>Учебный план</span>
       </Link>
     </div>
   );
